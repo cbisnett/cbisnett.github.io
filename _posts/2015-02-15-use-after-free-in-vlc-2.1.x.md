@@ -20,6 +20,8 @@ Opening the video will render corrupted playback for a few seconds before the wi
 
 As I said before, I found this vulnerability in the fall of 2013 and at that time the current version was 2.1.4.  I've tried building newer sources but after many hours of fighting trying to get a successful build, I've given up and the following code excerpts will be from the official 2.1.4 source release.
 
+I reported this bug to the VLC maintainers but they declined to fix the vulnerability and instead downplayed it since the bug doesn't affect the 2.2.x or 3.x branches.  While it is true that it doesn't affect the current 2.2.0 or 3.0.0 nightlies at the time of publishing, the 2.2.x branch was vulnerable when I reported it.  From my perspective that doesn't seem to matter much since the download page still serves up the 2.1.x binaries which are vulnerable.
+
 The full [bug](https://trac.videolan.org/vlc/ticket/12754) report contains a complete [AddressSanitizer](https://code.google.com/p/address-sanitizer/wiki/AddressSanitizer) output with symbols resolved.  AddressSanitizer reported this crash as a [Use-After-Free](http://cwe.mitre.org/data/definitions/416.html) vulnerability.  This is a stack trace for the faulting instruction:
 {% highlight bash %}
 =================================================================

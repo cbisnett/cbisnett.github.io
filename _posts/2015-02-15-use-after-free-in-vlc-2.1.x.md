@@ -113,13 +113,13 @@ This `atomic_fetch_sub` call contains the instruction which reads the value at `
 
 We now have a `picture_t` structure which has been freed twice.  Without AddressSanitizer this will crash due to heap corruption resulting from the double free.
 
-### Exploitation
+#### Exploitation
 
 I want to start this section by stating that I haven't spent much time analyzing the exploitability of this vulnerability but for the sake of argument I'm going to walk through why I believe this vulnerability can be successfully exploited.
 
 The sheer fact that the garbage collection structure contains a function pointer which will be invoked to free the instance is a huge step in the right direction.  If an attacker is able to cause an allocation after the first free and before the second, they may be able to direct execution to a ROP gadget and pivot the stack to attacker controlled data.  From that point it's simply a matter of chaining ROP gadgets to call `mprotect` and return to the newly executable memory.
 
-### Conclusion
+#### Conclusion
 
 Yes I understand that I just glossed over some very technical and often difficult to overcome challenges but this blog post isn't about exploiting this vulnerability merely challenging it's existence.  I contend this is a security vulnerability based on the details provided above.
 

@@ -1,0 +1,28 @@
+<div class="unit one-fifth hide-on-mobiles">
+  <aside>
+    <h4>Chris Bisnett</h4>
+    <img src="https://github.com/cbisnett.png" class="headshot"/>
+    <p class="bio">Currently a security researcher at Oceans Edge Inc. focused on modbile platforms.  I enjoy reverse engineering, fuzzing, and reading source code to find obscure vulnerabilities.</p>
+
+    <h4>Projects</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/cbisnett/sendarp">SendARP</a>
+      </li>
+    </ul>
+    <h4>Training Offerings</h4>
+    <ul>
+      <li class="subsection">Fuzzing For Vulnerabilities</li>
+      {% for post in site.categories.training limit:5 %}
+      <li class="{% if page.title == post.title %}current{% endif %}">
+        <a href="{{ post.registration_url }}">{{ post.venue }}</a>
+      </li>
+      {% endfor %}
+      <li>
+        <a href="https://www.blackhat.com/asia-15/training/fuzzing-for-vulnerabilities.html">BlackHat Asia 2015</a>
+      </li>
+      <li>BlackHat Trainings 2014</li>
+      <li>BlackHat Asia 2014</li>
+    </ul>
+  </aside>
+</div>

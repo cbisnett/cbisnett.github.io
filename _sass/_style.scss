@@ -428,6 +428,26 @@ aside {
     margin-top: 21px;
   }
 
+  .identities {
+    li a {
+
+      span {
+        margin-right: 10px;
+        font-size: 2em;
+        vertical-align: middle;
+      }
+
+    }
+
+    .twitter a {
+      color: #00aced;
+    }
+
+    .github a {
+      color: white;
+    }
+  }
+
   .bio {
     font-size: 0.75em;
   }

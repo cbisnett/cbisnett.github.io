@@ -12,4 +12,4 @@ After the success of last years training I'm pleased to announce that Blackhat i
 
 Last year we ran a "game" for all the students to apply their fuzzing techniques against an **extremely** vulnerable application, written by yours truly. All the students compete against each other to see who can find the most unique crashes and the winner takes home a prize. The students really enjoyed the competition and the chance to practice their new skills. I'm going to update the application this year to add even more bugs >:)
 
-If your interested in the class content, you can find all the details and register on the [training page](https://www.blackhat.com/us-16/training/fuzzing-for-vulnerabilities.html) on the Blackhat site. Look forward to seeing everyone there.
+If you're interested in the class content, you can find all the details and register on the [training page](https://www.blackhat.com/us-16/training/fuzzing-for-vulnerabilities.html) on the Blackhat site. Look forward to seeing everyone there.

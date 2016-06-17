@@ -23,7 +23,8 @@ As I said before, I found this vulnerability in the fall of 2013 and at that tim
 I reported this bug to the VLC maintainers but they declined to fix the vulnerability and instead downplayed it since the bug doesn't affect the 2.2.x or 3.x branches.  While it is true that it doesn't affect the current 2.2.0 or 3.0.0 nightlies at the time of publishing, the 2.2.x branch was vulnerable when I reported it.  From my perspective that doesn't seem to matter much since the download page still serves up the 2.1.x binaries which are vulnerable.
 
 The full [bug](https://trac.videolan.org/vlc/ticket/12754) report contains a complete [AddressSanitizer](https://code.google.com/p/address-sanitizer/wiki/AddressSanitizer) output with symbols resolved.  AddressSanitizer reported this crash as a [Use-After-Free](http://cwe.mitre.org/data/definitions/416.html) vulnerability.  This is a stack trace for the faulting instruction:
-{% highlight bash %}
+
+``` bash
 =================================================================
 ==5667== ERROR: AddressSanitizer: heap-use-after-free on address
 0x602a0005ea48 at pc 0x7f008f7971f7 bp 0x7f0077e74280 sp 0x7f0077e74278
@@ -41,10 +42,11 @@ WRITE of size 8 at 0x602a0005ea48 thread T36
     #10 0x7f006d56c948 in unrefcount_frame libav/libavcodec/utils.c:1414
     #11 0x7f006d56cd0e in avcodec_decode_video2 libav/libavcodec/utils.c:1496
     <snip>
-{% endhighlight %}
+```
 
 Looking at the stack trace it's pretty clear this has something to do with releasing a picture instance.  This is the structure of a `picture_t`:
-{% highlight c++ %}
+
+``` c++
 struct picture_t
 {
     video_frame_format_t format;
@@ -64,20 +66,22 @@ struct picture_t
     } gc;
     struct picture_t *p_next;
 };
-{% endhighlight %}
+```
 
 Based on the functions in the stack trace and the faulting function `vlc_atomic_sub`, I assumed I could narrow this down to the refcount member since it's the only atomic field in the structure.  A little work with GDB proved this to be correct:
-{% highlight bash %}
+
+``` bash
 (gdb) p &((struct picture_t*)0)->gc.refcount
 $1 = (vlc_atomic_t *) 0x128
 (gdb) p sizeof(struct picture_t)
 $2 = 328
-{% endhighlight %}
+```
 
 This aligns with the AddressSanitizer output which reported the faulting instruction attempted to write 8 bytes at offset 296 or 0x128.  This isn't the instruction which attempted the write but it's related.  I'll explain more in a minute.
 
 This also explains the maintainers [comment](https://trac.videolan.org/vlc/ticket/12754#comment:7) that this causes an assertion to fail in the 2.1.x branch.  While I didn't hit any assertion (due to my build settings) I expect the assertion that the maintainers are referring to is an assertion in `PictureDestroy`.  This function is defined in `src/misc/picture.c` and is assigned to the `pf_destroy` field of the garbage collection structure when the `picture_t` structure is created.
-{% highlight c %}
+
+``` c
 static void PictureDestroy( picture_t *p_picture )
 {
     assert( p_picture &&
@@ -87,13 +91,14 @@ static void PictureDestroy( picture_t *p_picture )
     free( p_picture->p_sys );
     free( p_picture );
 }
-{% endhighlight %}
+```
 
 The developer is asserting that they are indeed freeing an instance whose reference count is zero, meaning there are no other references which still require access to this memory.  A violation of this assertion means one of two things: the instance is being freed while references to it's memory still exist, or that this instance has already been freed in which case the reference count will be negative.
 
 In this case I know this to be the second possibility since AddressSanitizer tracks all allocations and frees.  Looking at the AddressSanitizer output we can see the stack trace for the free also ends in `PictureDestroy`.  I verified this by running the sample through GDB.  You can see from the following output that at the time the `vlc_atomic_sub` function is executed the reference count field is zero:
-{% highlight bash %}
-Breakpoint 2, __asan_report_error (pc=140737298543095, bp=140736845898368, sp=140736845898360, 
+
+``` bash
+Breakpoint 2, __asan_report_error (pc=140737298543095, bp=140736845898368, sp=140736845898360,
     addr=105733505280584, is_write=true, access_size=8)
     at ../../../../libsanitizer/asan/asan_report.cc:628
 628                          uptr addr, bool is_write, uptr access_size) {
@@ -107,7 +112,7 @@ Breakpoint 2, __asan_report_error (pc=140737298543095, bp=140736845898368, sp=14
 (gdb) p *atom
 $1 = {u = 0}
 (gdb)
-{% endhighlight %}
+```
 
 This `atomic_fetch_sub` call contains the instruction which reads the value at `atom->u` subtracts 1 and writes it back to memory.  Writing the new value back to memory is what triggers the AddressSanitizer crash since it's writing to memory that was freed and has not yet been re-allocated.
 

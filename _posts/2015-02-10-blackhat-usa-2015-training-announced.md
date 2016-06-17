@@ -1,4 +1,6 @@
 ---
+# Specify the title here so it keeps the correct capitalization
+title: Blackhat USA 2015 Training Announced
 layout: news_item
 author: cbisnett
 categories: [training]

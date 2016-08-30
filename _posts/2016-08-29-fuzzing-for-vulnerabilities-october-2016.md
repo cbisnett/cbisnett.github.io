@@ -27,6 +27,7 @@ Day 2 picks up where we left off and continues to build upon whats already been 
 
 - **Location:** ANRC Training Center, 6716 Alexander Bell Dr #100, Columbia, MD 21046
 - **Dates:** October 20th-21st
+- **Seats:** 20/20
 - **Cost:** $1950 (until 10/14) ; $2150 (after 10/14)
 - **Schedule:**
     - 0800 - Start

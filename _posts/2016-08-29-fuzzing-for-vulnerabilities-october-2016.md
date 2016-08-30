@@ -13,6 +13,8 @@ After a great response on [Twitter](https://twitter.com/chrisbisnett/status/7657
 
 This is the same course we taught at Blackhat USA 2016 and we received great feedback. We've added a number of exercises including fuzzing with [AFL (American Fuzzy Lop)](http://lcamtuf.coredump.cx/afl/) and [Radamsa](https://github.com/aoh/radamsa).
 
+For a complete list of topics, prerequisites, and trainer biographies, check out the [course details page](/ffv)
+
 #### Day 1
 
 Students start the course by learning fuzzing fundamentals. We find it's best if everyone understands all the parts to a successful and *scalable* fuzzing framework. Once all of those parts have been discussed and setup, the students will write their first fuzzer (dumbfuzz). After running this fuzzer against the most recent release of [VLC Media Player](http://www.videolan.org/vlc/download-windows.html) students will find **a 0-day vulnerability**! All this on the first day.
@@ -20,8 +22,6 @@ Students start the course by learning fuzzing fundamentals. We find it's best if
 #### Day 2
 
 Day 2 picks up where we left off and continues to build upon whats already been taught as we dive into format-aware (smart) fuzzers. The remainder of day 2 is where we cover a number of advanced topics to get students on the path to mastery. We will discuss AddressSanitizer; how it works, how it can help find additional vulnerabilities, and how to set it up. We also cover a number of other topics including: code coverage, corpus distillation, in-memory fuzzing, and differential fuzzing. Finally we will discuss crash analysis to automate analysis for thousands of crashes to determine unique vulnerabilities.
-
-For even more details please check out the [course overview](/ffv).
 
 ### Pricing
 

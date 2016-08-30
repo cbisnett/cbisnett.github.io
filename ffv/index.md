@@ -51,6 +51,10 @@ In addition to the training manual and exercise booklet, students will receive a
 
 ### Trainers
 
-[Chris Bisnett](https://twitter.com/chrisbisnett) is co-founder and product manager at Huntress Labs, a startup focused on automated breach detection through hunting persistence mechanisms. In the past Chris has worked as a defense contractor for the U.S. government and as a vulnerability analyst at the NSA RedTeam. He has extensive experience reverse engineering proprietary protocols and developing fuzzers. When not working, Chris enjoys participating in hacker capture-the-flag events.
+[Chris Bisnett](https://twitter.com/chrisbisnett)
+
+Chris Bisnett is co-founder and product manager at Huntress Labs, a startup focused on automated breach detection through hunting persistence mechanisms. In the past Chris has worked as a defense contractor for the U.S. government and as a vulnerability analyst at the NSA RedTeam. He has extensive experience reverse engineering proprietary protocols and developing fuzzers. When not working, Chris enjoys participating in hacker capture-the-flag events.
 
 [Kyle Hanslovan](https://twitter.com/kylehanslovan)
+
+For the past 10 years, Kyle Hanslovan has supported defensive and offensive cyber operations in the U.S. Intelligence Community and currently is the CEO of Huntress Labs. He previously co-founded the defense consulting firm StrategicIO which specializes in developing implants and exploits and won DEF CON 20's CTF competition. Additionally, he serves in the Maryland Air National Guard as a Cyber Warfare Operator. With his strong background in software development, reverse engineering, and malware analysis, Kyle enjoys making life hard for unsophisticated cyber actors.
